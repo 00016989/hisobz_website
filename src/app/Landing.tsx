@@ -605,36 +605,44 @@ function Reveal({ children, delay = 0, className = "" }: { children: React.React
   );
 }
 
-/* Raqamni 0 dan maqsadgacha "sanab" chiqaradi (ko'rinishga kirganda). JS bo'lmasa — to'g'ri raqam ko'rinadi. */
+/* Raqamni 0 dan maqsadgacha "sanab" chiqaradi (ko'rinishga kirganda). FAQAT BIR MARTA — qayta tiklanmaydi. */
 function Counter({ value }: { value: string }) {
-  const match = value.match(/^(\d+)(.*)$/);
-  const target = match ? parseInt(match[1], 10) : 0;
-  const suffix = match ? match[2] : value;
+  const m = value.match(/^(\d+)(.*)$/);
+  const target = m ? parseInt(m[1], 10) : 0;
+  const suffix = m ? m[2] : value;
+  const isNum = !!m;
   const ref = useRef<HTMLSpanElement>(null);
-  const [n, setN] = useState(target); // SSR/no-JS: darhol haqiqiy son
+  const done = useRef(false);
+  // Raqam bo'lsa — animatsiya uchun 0 dan boshlaymiz (lekin JS yo'q bo'lsa darhol to'liq qiymat ko'rsatamiz).
+  const [n, setN] = useState(target);
   useEffect(() => {
+    if (done.current || !isNum) return;
     const el = ref.current;
-    if (!el || !match) return;
+    if (!el) return;
     const reduce = typeof matchMedia !== "undefined" && matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce || typeof IntersectionObserver === "undefined") return;
-    const io = new IntersectionObserver(([e]) => {
-      if (!e.isIntersecting) return;
+    if (reduce || typeof IntersectionObserver === "undefined") { setN(target); return; }
+    let raf = 0;
+    const io = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting || done.current) return;
+      done.current = true; // boshqa hech qachon qayta ishlamaydi
       io.disconnect();
-      const dur = 1100;
+      const dur = 1400;
       let startT = 0;
       const tick = (now: number) => {
         if (!startT) startT = now;
         const p = Math.min(1, (now - startT) / dur);
         const eased = 1 - Math.pow(1 - p, 3);
         setN(Math.round(target * eased));
-        if (p < 1) requestAnimationFrame(tick);
+        if (p < 1) raf = requestAnimationFrame(tick);
+        else setN(target);
       };
       setN(0);
-      requestAnimationFrame(tick);
-    }, { threshold: 0.4 });
+      raf = requestAnimationFrame(tick);
+    }, { threshold: 0.25 });
     io.observe(el);
-    return () => io.disconnect();
-  }, [match, target]);
+    return () => { io.disconnect(); cancelAnimationFrame(raf); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return <span ref={ref}>{n}{suffix}</span>;
 }
 
@@ -1098,15 +1106,16 @@ export default function Landing() {
         #hz-g1:checked ~ .hz-tablabels label[for="hz-g1"],
         #hz-g2:checked ~ .hz-tablabels label[for="hz-g2"]{ background:#fff; color:#0f172a; box-shadow: 0 1px 2px rgba(16,24,40,0.08); }
         .hz-tablabel:focus-visible{ outline: 2px solid #fb923c; outline-offset: 2px; }
-        /* Apple uslubidagi STACKING — bo'limlar yumaloq tepa bilan ustma-ust "ko'tariladi" */
+        /* Apple uslubidagi STACKING — har bir bo'lim yopishadi (sticky), keyingisi ustiga KO'TARILADI */
         main > section { background-color: #fff; }
         main > section:not(:first-child) {
-          position: relative;
-          border-top-left-radius: 2.5rem;
-          border-top-right-radius: 2.5rem;
-          margin-top: -2rem;
-          box-shadow: 0 -24px 50px -30px rgba(16,24,40,0.25);
-          overflow: hidden;
+          border-top-left-radius: 2rem;
+          border-top-right-radius: 2rem;
+          box-shadow: 0 -18px 50px -26px rgba(16,24,40,0.3);
+        }
+        main > section:not(:first-child):not(:last-child) {
+          position: sticky;
+          top: 0;
         }
       `}</style>
 
