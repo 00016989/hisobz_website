@@ -1,7 +1,12 @@
 "use client";
 
 import { useActionState, useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
+import { motion, useScroll, useSpring, useTransform, useMotionValue } from "framer-motion";
 import { submitContact, type ContactState } from "./actions";
+
+// 3D sahna — faqat brauzerda (WebGL), SSR'siz; yuklanmaguncha hech narsa ko'rsatmaydi.
+const Hero3D = dynamic(() => import("./Hero3D"), { ssr: false, loading: () => null });
 
 /* ============================================================================
    Hisobz — ommaviy sayt (Uz / Ru / En). iOS uslubi, brend apelsin rangi.
@@ -181,6 +186,18 @@ const DICT = {
       button: "Bog'lanish",
     },
     sticky: "Bog'lanish",
+    ai: {
+      badge: "Tez kunda — Sun'iy intellekt",
+      title: "Aqlli savdo — Hisobz AI",
+      subtitle: "Hisobz nafaqat hisoblaydi — u o'ylaydi. AI narxlarni tekshiradi, talabni bashorat qiladi va savollaringizga javob beradi.",
+      items: [
+        { t: "Avto narx tekshiruvi", d: "AI har bir mahsulot narxini bozor bilan solishtiradi va eng foydali narxni taklif qiladi." },
+        { t: "Talab bashorati", d: "Qaysi tovar tugashini oldindan aytadi — o'z vaqtida buyurtma qiling." },
+        { t: "Aqlli yordamchi", d: "\"Bugun eng ko'p nima sotildi?\" deb so'rang — darhol javob oling." },
+      ],
+      demo: "AI hisoblamoqda…",
+      cart: "Savatcha tahlili",
+    },
   },
 
   ru: {
@@ -340,6 +357,18 @@ const DICT = {
       button: "Связаться",
     },
     sticky: "Связаться",
+    ai: {
+      badge: "Скоро — Искусственный интеллект",
+      title: "Умная торговля — Hisobz AI",
+      subtitle: "Hisobz не просто считает — он думает. AI проверяет цены, прогнозирует спрос и отвечает на ваши вопросы.",
+      items: [
+        { t: "Авто-проверка цен", d: "AI сравнивает цену каждого товара с рынком и предлагает самую выгодную." },
+        { t: "Прогноз спроса", d: "Заранее подскажет, что заканчивается — заказывайте вовремя." },
+        { t: "Умный помощник", d: "Спросите «Что продавалось лучше всего сегодня?» — получите ответ сразу." },
+      ],
+      demo: "AI считает…",
+      cart: "Анализ корзины",
+    },
   },
 
   en: {
@@ -499,6 +528,18 @@ const DICT = {
       button: "Contact us",
     },
     sticky: "Contact us",
+    ai: {
+      badge: "Coming soon — Artificial Intelligence",
+      title: "Smart retail — Hisobz AI",
+      subtitle: "Hisobz doesn't just count — it thinks. AI checks prices, forecasts demand and answers your questions.",
+      items: [
+        { t: "Auto price-check", d: "AI compares each product's price with the market and suggests the most profitable one." },
+        { t: "Demand forecast", d: "Tells you in advance what's running out — order on time." },
+        { t: "Smart assistant", d: "Ask \"What sold best today?\" — get the answer instantly." },
+      ],
+      demo: "AI calculating…",
+      cart: "Cart analysis",
+    },
   },
 } as const;
 
@@ -520,6 +561,7 @@ const Ic = {
   mail: "M3 5h18v14H3zM3 6l9 7 9-7",
   search: "M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM21 21l-4.3-4.3",
   pin: "M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12zM12 8a2 2 0 1 0 0 4 2 2 0 0 0 0-4z",
+  spark: "M12 3l1.7 4.8L18.5 9.5l-4.8 1.7L12 16l-1.7-4.8L5.5 9.5l4.8-1.7L12 3zM18.5 14l.6 1.8 1.9.6-1.9.6-.6 1.8-.6-1.8-1.9-.6 1.9-.6.6-1.8z",
 };
 
 // Use-case ikonkalari (emoji o'rniga toza chiziqli ikonka)
@@ -594,6 +636,32 @@ function Counter({ value }: { value: string }) {
     return () => io.disconnect();
   }, [match, target]);
   return <span ref={ref}>{n}{suffix}</span>;
+}
+
+/* Sichqoncha bilan 3D egiluvchi karta (Apple uslubi). Mobil'da tekis qoladi. */
+function TiltCard({ children, className = "", intensity = 9 }: { children: React.ReactNode; className?: string; intensity?: number }) {
+  const rx = useMotionValue(0);
+  const ry = useMotionValue(0);
+  const srx = useSpring(rx, { stiffness: 150, damping: 16 });
+  const sry = useSpring(ry, { stiffness: 150, damping: 16 });
+  function onMove(e: React.MouseEvent<HTMLDivElement>) {
+    const r = e.currentTarget.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width - 0.5;
+    const py = (e.clientY - r.top) / r.height - 0.5;
+    ry.set(px * intensity);
+    rx.set(-py * intensity);
+  }
+  function reset() { rx.set(0); ry.set(0); }
+  return (
+    <motion.div
+      onMouseMove={onMove}
+      onMouseLeave={reset}
+      style={{ rotateX: srx, rotateY: sry, transformStyle: "preserve-3d", transformPerspective: 900 }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
 }
 
 function Logo({ size = 36 }: { size?: number }) {
@@ -843,11 +911,120 @@ const COMPARE_ROWS: { f: keyof (typeof DICT)["uz"]["compare"]["rows"]; h: string
   { f: "ownership", h: "yes", b: "partial", o: "no" },
 ];
 
+function Dot({ d = 0 }: { d?: number }) {
+  return <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand-400" style={{ animation: `hz-blink 1s ${d}s infinite` }} />;
+}
+
+/* AI bo'limi — "tez kunda", AI savatchani hisoblayotgan animatsiya bilan */
+function AISection({ t }: { t: Dict["ai"] }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [total, setTotal] = useState(247500);
+  const [thinking, setThinking] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      io.disconnect();
+      setThinking(true);
+      const target = 247500;
+      const t0 = performance.now();
+      const dur = 1700;
+      const tick = (now: number) => {
+        const p = Math.min(1, (now - t0) / dur);
+        const eased = 1 - Math.pow(1 - p, 3);
+        setTotal(Math.round(target * eased));
+        if (p < 1) requestAnimationFrame(tick);
+        else setThinking(false);
+      };
+      setTotal(0);
+      requestAnimationFrame(tick);
+    }, { threshold: 0.4 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const items = [
+    { n: "Coca-Cola 0.5L", q: "×2", p: "12 000" },
+    { n: "Nestle 1.5L", q: "×1", p: "5 500" },
+    { n: "Lavazza 250g", q: "×1", p: "62 000" },
+  ];
+
+  return (
+    <section className="relative overflow-hidden bg-slate-950 py-24">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-1/4 top-0 h-96 w-96 -translate-x-1/2 rounded-full bg-brand-600/30 blur-[120px]" />
+        <div className="absolute bottom-0 right-1/4 h-96 w-96 translate-x-1/2 rounded-full bg-indigo-600/20 blur-[120px]" />
+      </div>
+      <div className="relative mx-auto grid max-w-6xl items-center gap-14 px-4 sm:px-6 md:grid-cols-2">
+        <motion.div initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}>
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-semibold text-brand-300">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-brand-400" /> {t.badge}
+          </span>
+          <h2 className="mt-5 text-3xl font-bold tracking-tight text-white sm:text-4xl">{t.title}</h2>
+          <p className="mt-4 text-[17px] leading-relaxed text-slate-300">{t.subtitle}</p>
+          <ul className="mt-7 space-y-4">
+            {t.items.map((it) => (
+              <li key={it.t} className="flex gap-3.5">
+                <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-brand-400 to-brand-700 text-white">
+                  <Icon d={Ic.spark} className="h-5 w-5" />
+                </span>
+                <div>
+                  <div className="font-semibold text-white">{it.t}</div>
+                  <div className="text-sm text-slate-400">{it.d}</div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </motion.div>
+
+        <motion.div ref={ref} initial={{ opacity: 0, scale: 0.94 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}>
+          <div className="relative rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl">
+            <div className="mb-4 flex items-center justify-between">
+              <span className="text-sm font-semibold text-white">{t.cart}</span>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-500/15 px-2.5 py-1 text-[11px] font-medium text-brand-300">
+                <Icon d={Ic.spark} className="h-3 w-3" /> AI
+              </span>
+            </div>
+            <div className="space-y-2">
+              {items.map((r) => (
+                <div key={r.n} className="flex items-center justify-between rounded-xl bg-white/5 px-3.5 py-2.5">
+                  <div>
+                    <div className="text-[13px] font-medium text-white">{r.n}</div>
+                    <div className="text-[11px] text-slate-500">{r.q}</div>
+                  </div>
+                  <div className="text-[13px] font-semibold text-slate-200">{r.p}</div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-4">
+              <span className="flex items-center gap-2 text-sm text-slate-400">
+                {thinking ? (
+                  <><span className="inline-flex items-center gap-1"><Dot /><Dot d={0.15} /><Dot d={0.3} /></span> {t.demo}</>
+                ) : (
+                  <><Icon d={Ic.spark} className="h-4 w-4 text-brand-400" /> {t.cart}</>
+                )}
+              </span>
+              <span className="text-xl font-bold tabular-nums text-white">{total.toLocaleString("ru-RU")} <span className="text-xs font-medium text-slate-500">so'm</span></span>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
 /* --------------------------------- main ------------------------------------ */
 export default function Landing() {
   const [lang, setLang] = useState<Lang>("uz");
   const [menuOpen, setMenuOpen] = useState(false);
   const t = DICT[lang];
+
+  // Yuqoridagi scroll-progress chizig'i
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.3 });
+  // Hero parallax — fon bloblari scroll bilan suriladi
+  const heroBlobY = useTransform(scrollYProgress, [0, 0.25], [0, 120]);
 
   useEffect(() => {
     try {
@@ -860,11 +1037,34 @@ export default function Landing() {
     try { localStorage.setItem("hisobz_lang", l); } catch {}
   }
 
-  // Yumshoq scroll — faqat shu sahifada (ilovaga ta'sir qilmasin)
+  // Lenis — Apple uslubidagi inersiyali yumshoq scroll + anchor havolalar
   useEffect(() => {
-    const prev = document.documentElement.style.scrollBehavior;
-    document.documentElement.style.scrollBehavior = "smooth";
-    return () => { document.documentElement.style.scrollBehavior = prev; };
+    let lenis: any = null;
+    let raf = 0;
+    let onClick: ((e: MouseEvent) => void) | null = null;
+    let alive = true;
+    const reduce = typeof matchMedia !== "undefined" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+    import("lenis").then(({ default: Lenis }) => {
+      if (!alive) return;
+      lenis = new Lenis({ duration: 1.1, smoothWheel: true, touchMultiplier: 1.6 });
+      const loop = (time: number) => { lenis.raf(time); raf = requestAnimationFrame(loop); };
+      raf = requestAnimationFrame(loop);
+      onClick = (e: MouseEvent) => {
+        const a = (e.target as HTMLElement)?.closest?.('a[href^="#"]') as HTMLAnchorElement | null;
+        const href = a?.getAttribute("href");
+        if (!href || href === "#") return;
+        const el = document.querySelector(href);
+        if (el) { e.preventDefault(); lenis.scrollTo(el as HTMLElement, { offset: -70 }); }
+      };
+      document.addEventListener("click", onClick);
+    });
+    return () => {
+      alive = false;
+      cancelAnimationFrame(raf);
+      if (onClick) document.removeEventListener("click", onClick);
+      lenis?.destroy?.();
+    };
   }, []);
 
   const navLinks: { href: string; label: string }[] = [
@@ -886,6 +1086,7 @@ export default function Landing() {
         .hz-floaty{ animation: hz-floaty 6s ease-in-out infinite }
         .hz-floaty2{ animation: hz-floaty2 7.5s ease-in-out infinite }
         .hz-marquee{ animation: hz-marquee 26s linear infinite }
+        @keyframes hz-blink { 0%,100%{ opacity: 0.25 } 50%{ opacity: 1 } }
         @media (prefers-reduced-motion: reduce){ .hz-reveal,.hz-floaty,.hz-floaty2,.hz-marquee{ animation: none } }
         /* CSS-only galereya tablari */
         .hz-tabinput{ position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
@@ -898,6 +1099,10 @@ export default function Landing() {
         #hz-g2:checked ~ .hz-tablabels label[for="hz-g2"]{ background:#fff; color:#0f172a; box-shadow: 0 1px 2px rgba(16,24,40,0.08); }
         .hz-tablabel:focus-visible{ outline: 2px solid #fb923c; outline-offset: 2px; }
       `}</style>
+
+      {/* Scroll-progress chizig'i (yuqorida) */}
+      <motion.div className="fixed left-0 top-0 z-[60] h-[3px] w-full origin-left bg-gradient-to-r from-brand-400 via-brand-500 to-brand-700" style={{ scaleX: progress }} />
+
       {/* ============================ NAV ============================ */}
       <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/80 backdrop-blur-xl">
         <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
@@ -962,10 +1167,10 @@ export default function Landing() {
       <main id="top">
         {/* ============================ HERO ============================ */}
         <section className="relative overflow-hidden">
-          <div className="pointer-events-none absolute inset-0">
+          <motion.div className="pointer-events-none absolute inset-0" style={{ y: heroBlobY }}>
             <div className="absolute -left-32 -top-32 h-[28rem] w-[28rem] rounded-full bg-brand-200/50 blur-3xl" />
             <div className="absolute -right-40 top-20 h-[26rem] w-[26rem] rounded-full bg-brand-100/70 blur-3xl" />
-          </div>
+          </motion.div>
           <div className="relative mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 md:grid-cols-2 md:items-center md:py-24">
             <div>
               <span className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700">
@@ -983,39 +1188,12 @@ export default function Landing() {
               <p className="mt-4 text-[13px] text-slate-400">{t.hero.note}</p>
             </div>
 
-            {/* Web ilova "screenshot"i (brauzer ramkasida) + telefon */}
-            <div className="relative flex justify-center md:justify-end">
-              <BrowserFrame url={`hisobz.uz/${MOCK[lang].dash.toLowerCase()}`} className="w-full max-w-md">
-                <div className="bg-[#f2f2f7] p-4">
-                  <div className="mb-3 flex items-center justify-between">
-                    <span className="text-sm font-bold text-slate-900">{MOCK[lang].dash}</span>
-                    <span className="rounded-full bg-white px-2.5 py-1 text-[11px] font-medium text-slate-500 ring-1 ring-slate-200">30 {lang === "ru" ? "дн." : lang === "en" ? "days" : "kun"}</span>
-                  </div>
-                  <div className="rounded-2xl bg-white p-4 shadow-sm">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <div className="text-xs text-slate-400">{MOCK[lang].todayRev}</div>
-                        <div className="text-2xl font-bold text-slate-900">4 280 000 <span className="text-xs font-medium text-slate-400">{MOCK[lang].som}</span></div>
-                      </div>
-                      <span className="rounded-full bg-emerald-100 px-2 py-1 text-xs font-semibold text-emerald-600">▲ 12%</span>
-                    </div>
-                    <div className="mt-4 flex h-28 items-end gap-2">
-                      {[44, 66, 52, 84, 60, 96, 74].map((h, i) => (
-                        <div key={i} className="flex-1 rounded-t-lg bg-gradient-to-t from-brand-500 to-brand-300" style={{ height: `${h}%` }} />
-                      ))}
-                    </div>
-                  </div>
-                  <div className="mt-3 grid grid-cols-3 gap-2">
-                    {[{ l: MOCK[lang].receipts, v: "128" }, { l: MOCK[lang].customers, v: "+9" }, { l: MOCK[lang].profit, v: "31%" }].map((c) => (
-                      <div key={c.l} className="rounded-xl bg-white p-2.5 text-center shadow-sm">
-                        <div className="text-[11px] text-slate-400">{c.l}</div>
-                        <div className="text-sm font-bold text-slate-800">{c.v}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </BrowserFrame>
-              <div className="hz-floaty absolute -bottom-12 -right-2 hidden scale-[0.6] sm:block lg:-right-8">
+            {/* 3D markaziy blob (WebGL) + suzuvchi telefon */}
+            <div className="relative flex h-[420px] items-center justify-center md:h-[540px]">
+              <div className="pointer-events-none absolute inset-0 md:pointer-events-auto">
+                <Hero3D />
+              </div>
+              <div className="hz-floaty relative z-10 scale-[0.82] sm:scale-95">
                 <PhoneFrame><PosScreen lang={lang} /></PhoneFrame>
               </div>
             </div>
@@ -1068,13 +1246,13 @@ export default function Landing() {
             <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {t.features.items.map((f, i) => (
                 <Reveal key={f.t} delay={(i % 4) * 70}>
-                  <div className="card group h-full p-6 transition-transform duration-200 hover:-translate-y-1">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-100 text-brand-600 transition-colors group-hover:bg-brand-600 group-hover:text-white">
+                  <TiltCard className="card group h-full p-6 transition-shadow duration-200 hover:shadow-[0_18px_44px_-16px_rgba(234,88,12,0.35)]">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-100 text-brand-600 transition-colors group-hover:bg-brand-600 group-hover:text-white" style={{ transform: "translateZ(28px)" }}>
                       <Icon d={FEATURE_ICONS[i]} className="h-6 w-6" />
                     </div>
                     <h3 className="mt-4 text-base font-semibold text-slate-900">{f.t}</h3>
                     <p className="mt-1.5 text-sm leading-relaxed text-slate-500">{f.d}</p>
-                  </div>
+                  </TiltCard>
                 </Reveal>
               ))}
             </div>
@@ -1161,6 +1339,9 @@ export default function Landing() {
             </div>
           </div>
         </section>
+
+        {/* ============================ AI (coming soon) ============================ */}
+        <AISection t={t.ai} />
 
         {/* ============================ USE CASES ============================ */}
         <section className="py-20">
