@@ -1,0 +1,23 @@
+# Render blueprint — bu repo'ni Render'ga ulang, qolganini avtomatik qiladi.
+# Baza KERAK EMAS — bu faqat marketing sayti.
+services:
+  - type: web
+    name: hisobz-website
+    runtime: node
+    plan: free
+    region: frankfurt # Markaziy Osiyoga eng yaqin bepul region
+    branch: main
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      # Saytning haqiqiy manzili (OG/share kartasi uchun), masalan https://hisobz.uz
+      - key: NEXT_PUBLIC_SITE_URL
+        sync: false
+      # Bog'lanish formasi -> Telegram (ixtiyoriy). Bo'lmasa demo rejim.
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_CHAT_ID
+        sync: false
