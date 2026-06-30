@@ -43,7 +43,7 @@ const DICT = {
     },
     stats: [
       { v: "20+", l: "modul" },
-      { v: "3", l: "til" },
+      { v: "60s", l: "ishga tushirish" },
       { v: "7+", l: "integratsiya" },
       { v: "100%", l: "oflayn kassa" },
     ],
@@ -214,7 +214,7 @@ const DICT = {
     },
     stats: [
       { v: "20+", l: "модулей" },
-      { v: "3", l: "языка" },
+      { v: "60s", l: "до запуска" },
       { v: "7+", l: "интеграций" },
       { v: "100%", l: "офлайн касса" },
     ],
@@ -385,7 +385,7 @@ const DICT = {
     },
     stats: [
       { v: "20+", l: "modules" },
-      { v: "3", l: "languages" },
+      { v: "60s", l: "to set up" },
       { v: "7+", l: "integrations" },
       { v: "100%", l: "offline POS" },
     ],
@@ -1047,7 +1047,7 @@ export default function Landing() {
     if (reduce) return;
     import("lenis").then(({ default: Lenis }) => {
       if (!alive) return;
-      lenis = new Lenis({ duration: 1.1, smoothWheel: true, touchMultiplier: 1.6 });
+      lenis = new Lenis({ lerp: 0.12, smoothWheel: true, wheelMultiplier: 1, touchMultiplier: 1.6 });
       const loop = (time: number) => { lenis.raf(time); raf = requestAnimationFrame(loop); };
       raf = requestAnimationFrame(loop);
       onClick = (e: MouseEvent) => {
@@ -1098,6 +1098,16 @@ export default function Landing() {
         #hz-g1:checked ~ .hz-tablabels label[for="hz-g1"],
         #hz-g2:checked ~ .hz-tablabels label[for="hz-g2"]{ background:#fff; color:#0f172a; box-shadow: 0 1px 2px rgba(16,24,40,0.08); }
         .hz-tablabel:focus-visible{ outline: 2px solid #fb923c; outline-offset: 2px; }
+        /* Apple uslubidagi STACKING — bo'limlar yumaloq tepa bilan ustma-ust "ko'tariladi" */
+        main > section { background-color: #fff; }
+        main > section:not(:first-child) {
+          position: relative;
+          border-top-left-radius: 2.5rem;
+          border-top-right-radius: 2.5rem;
+          margin-top: -2rem;
+          box-shadow: 0 -24px 50px -30px rgba(16,24,40,0.25);
+          overflow: hidden;
+        }
       `}</style>
 
       {/* Scroll-progress chizig'i (yuqorida) */}

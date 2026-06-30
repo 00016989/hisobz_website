@@ -2,7 +2,7 @@
 
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, MeshDistortMaterial, Sparkles } from "@react-three/drei";
-import { Suspense, useRef } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import type { Mesh, Group } from "three";
 
 /* Markaziy "shisha" blob — apelsin rangli, sekin aylanadi va deformatsiyalanadi */
@@ -65,23 +65,36 @@ function Rig() {
 }
 
 export default function Hero3D() {
+  const wrap = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(true);
+  // Ko'rinmaganda renderni to'xtatamiz — GPU bo'shaydi, scroll silliq qoladi.
+  useEffect(() => {
+    const el = wrap.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(([e]) => setActive(e.isIntersecting), { threshold: 0.04 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
   return (
-    <Canvas
-      camera={{ position: [0, 0, 4.6], fov: 45 }}
-      dpr={[1, 2]}
-      gl={{ antialias: true, alpha: true }}
-      style={{ background: "transparent" }}
-    >
-      <Suspense fallback={null}>
-        <ambientLight intensity={0.7} />
-        <directionalLight position={[3, 4, 3]} intensity={1.7} color="#fff7ed" />
-        <pointLight position={[-3, -2, -2]} intensity={2.2} color="#ea580c" />
-        <pointLight position={[2.5, -3, 2]} intensity={1.3} color="#fdba74" />
-        <Blob />
-        <Orbiters />
-        <Sparkles count={45} scale={7} size={2.2} speed={0.35} color="#fdba74" opacity={0.55} />
-        <Rig />
-      </Suspense>
-    </Canvas>
+    <div ref={wrap} className="h-full w-full">
+      <Canvas
+        frameloop={active ? "always" : "never"}
+        camera={{ position: [0, 0, 4.6], fov: 45 }}
+        dpr={[1, 1.5]}
+        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+        style={{ background: "transparent" }}
+      >
+        <Suspense fallback={null}>
+          <ambientLight intensity={0.7} />
+          <directionalLight position={[3, 4, 3]} intensity={1.7} color="#fff7ed" />
+          <pointLight position={[-3, -2, -2]} intensity={2.2} color="#ea580c" />
+          <pointLight position={[2.5, -3, 2]} intensity={1.3} color="#fdba74" />
+          <Blob />
+          <Orbiters />
+          <Sparkles count={45} scale={7} size={2.2} speed={0.35} color="#fdba74" opacity={0.55} />
+          <Rig />
+        </Suspense>
+      </Canvas>
+    </div>
   );
 }
