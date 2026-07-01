@@ -1275,6 +1275,8 @@ export default function Landing() {
           </div>
         </section>
 
+        {/* ==== STACKING SHOWCASE guruhi (Gallery -> Mobile -> AI) — sticky shu div ICHIDA chegaralanadi ==== */}
+        <div className="relative">
         {/* ============================ GALLERY (screenshots) ============================ */}
         <section className="hz-stackable bg-white py-20">
           <div className="mx-auto max-w-6xl px-4 sm:px-6">
@@ -1358,6 +1360,8 @@ export default function Landing() {
 
         {/* ============================ AI (coming soon) ============================ */}
         <AISection t={t.ai} />
+        </div>
+        {/* stacking guruhi tugadi — quyidagilar oddiy scroll */}
 
         {/* ============================ USE CASES ============================ */}
         <section className="relative z-10 bg-white py-20">
