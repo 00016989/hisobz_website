@@ -959,7 +959,7 @@ function AISection({ t }: { t: Dict["ai"] }) {
   ];
 
   return (
-    <section className="relative overflow-hidden bg-slate-950 py-24">
+    <section className="hz-stackable relative overflow-hidden bg-slate-950 py-24">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-1/4 top-0 h-96 w-96 -translate-x-1/2 rounded-full bg-brand-600/30 blur-[120px]" />
         <div className="absolute bottom-0 right-1/4 h-96 w-96 translate-x-1/2 rounded-full bg-indigo-600/20 blur-[120px]" />
@@ -1106,16 +1106,13 @@ export default function Landing() {
         #hz-g1:checked ~ .hz-tablabels label[for="hz-g1"],
         #hz-g2:checked ~ .hz-tablabels label[for="hz-g2"]{ background:#fff; color:#0f172a; box-shadow: 0 1px 2px rgba(16,24,40,0.08); }
         .hz-tablabel:focus-visible{ outline: 2px solid #fb923c; outline-offset: 2px; }
-        /* Apple uslubidagi STACKING — har bir bo'lim yopishadi (sticky), keyingisi ustiga KO'TARILADI */
-        main > section { background-color: #fff; }
-        main > section:not(:first-child) {
-          border-top-left-radius: 2rem;
-          border-top-right-radius: 2rem;
-          box-shadow: 0 -18px 50px -26px rgba(16,24,40,0.3);
-        }
-        main > section:not(:first-child):not(:last-child) {
+        /* Apple uslubidagi STACKING — FAQAT tanlangan bo'limlar (.hz-stackable) ustma-ust ko'tariladi */
+        .hz-stackable {
           position: sticky;
           top: 0;
+          border-top-left-radius: 2.25rem;
+          border-top-right-radius: 2.25rem;
+          box-shadow: 0 -18px 50px -24px rgba(16,24,40,0.32);
         }
       `}</style>
 
@@ -1279,7 +1276,7 @@ export default function Landing() {
         </section>
 
         {/* ============================ GALLERY (screenshots) ============================ */}
-        <section className="py-20">
+        <section className="hz-stackable bg-white py-20">
           <div className="mx-auto max-w-6xl px-4 sm:px-6">
             <Reveal className="mx-auto max-w-2xl text-center">
               <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">{t.gallery.title}</h2>
@@ -1313,7 +1310,7 @@ export default function Landing() {
         </section>
 
         {/* ============================ MOBILE ============================ */}
-        <section id="mobile" className="overflow-hidden py-20">
+        <section id="mobile" className="hz-stackable overflow-hidden bg-[#f2f2f7] py-20">
           <div className="mx-auto grid max-w-6xl items-center gap-14 px-4 sm:px-6 md:grid-cols-2">
             <div className="relative flex justify-center gap-4">
               <div className="hz-floaty translate-y-6">
@@ -1363,7 +1360,7 @@ export default function Landing() {
         <AISection t={t.ai} />
 
         {/* ============================ USE CASES ============================ */}
-        <section className="py-20">
+        <section className="relative z-10 bg-white py-20">
           <div className="mx-auto max-w-6xl px-4 sm:px-6">
             <Reveal className="mx-auto max-w-2xl text-center">
               <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">{t.useCases.title}</h2>
