@@ -746,19 +746,19 @@ function BrowserFrame({ url, children, className = "" }: { url: string; children
 
 /* Mock ekranlar uchun tilga moslangan yorliqlar */
 const MOCK = {
-  uz: { pos: "Kassa", shiftOpen: "Smena ochiq", search: "Shtrix-kod yoki nom…", total: "Jami", pay: "To'lov", som: "so'm", dash: "Boshqaruv", todayRev: "Bugungi tushum", vsYesterday: "kechagidan", receipts: "Cheklar", avgCheck: "O'rtacha chek", customers: "Mijozlar", lowStock: "Tugayotgan", profit: "Foyda", prod: "Tovar", stock: "Qoldiq", price: "Narx", low: "Kam", inventory: "Ombor", analytics: "Tahlil", byCategory: "Kategoriya bo'yicha", revenue: "Tushum" },
-  ru: { pos: "Касса", shiftOpen: "Смена открыта", search: "Штрих-код или название…", total: "Итого", pay: "Оплата", som: "сум", dash: "Панель", todayRev: "Выручка сегодня", vsYesterday: "к вчера", receipts: "Чеки", avgCheck: "Средний чек", customers: "Клиенты", lowStock: "Заканчивается", profit: "Прибыль", prod: "Товар", stock: "Остаток", price: "Цена", low: "Мало", inventory: "Склад", analytics: "Аналитика", byCategory: "По категориям", revenue: "Выручка" },
-  en: { pos: "Checkout", shiftOpen: "Shift open", search: "Barcode or name…", total: "Total", pay: "Pay", som: "so'm", dash: "Dashboard", todayRev: "Today's revenue", vsYesterday: "vs yesterday", receipts: "Receipts", avgCheck: "Avg. receipt", customers: "Customers", lowStock: "Low stock", profit: "Profit", prod: "Product", stock: "Stock", price: "Price", low: "Low", inventory: "Inventory", analytics: "Analytics", byCategory: "By category", revenue: "Revenue" },
+  uz: { pos: "Kassa", shiftOpen: "Smena ochiq", search: "Shtrix-kod yoki nom…", total: "Jami", pay: "To'lov", som: "so'm", dash: "Boshqaruv", todayRev: "Bugungi tushum", vsYesterday: "kechagidan", receipts: "Cheklar", avgCheck: "O'rtacha chek", customers: "Mijozlar", lowStock: "Tugayotgan", profit: "Foyda", prod: "Tovar", stock: "Qoldiq", price: "Narx", low: "Kam", inventory: "Ombor", analytics: "Tahlil", byCategory: "Kategoriya bo'yicha", revenue: "Tushum", panel: "Boshqaruv paneli", aiSignals: "AI signallar", running: "tugayapti", dead: "o'lik tovar", products: "Mahsulotlar", monthRev: "Oylik tushum", topSold: "Eng ko'p sotilganlar", sold: "sotildi", ending: "tugayapti", allTab: "Barchasi", lowTab: "Kam qoldiq", revenue30: "30 kunlik tushum", estProfit: "Taxminiy foyda", unitsSold: "Sotilgan birliklar", payTypes: "To'lov turlari" },
+  ru: { pos: "Касса", shiftOpen: "Смена открыта", search: "Штрих-код или название…", total: "Итого", pay: "Оплата", som: "сум", dash: "Панель", todayRev: "Выручка сегодня", vsYesterday: "к вчера", receipts: "Чеки", avgCheck: "Средний чек", customers: "Клиенты", lowStock: "Заканчивается", profit: "Прибыль", prod: "Товар", stock: "Остаток", price: "Цена", low: "Мало", inventory: "Склад", analytics: "Аналитика", byCategory: "По категориям", revenue: "Выручка", panel: "Панель управления", aiSignals: "AI сигналы", running: "заканч.", dead: "мёртвый товар", products: "Товары", monthRev: "Выручка за месяц", topSold: "Топ продаж", sold: "продано", ending: "заканч.", allTab: "Все", lowTab: "Мало", revenue30: "Выручка за 30 дн", estProfit: "Расчётная прибыль", unitsSold: "Продано единиц", payTypes: "Способы оплаты" },
+  en: { pos: "Checkout", shiftOpen: "Shift open", search: "Barcode or name…", total: "Total", pay: "Pay", som: "so'm", dash: "Dashboard", todayRev: "Today's revenue", vsYesterday: "vs yesterday", receipts: "Receipts", avgCheck: "Avg. receipt", customers: "Customers", lowStock: "Low stock", profit: "Profit", prod: "Product", stock: "Stock", price: "Price", low: "Low", inventory: "Inventory", analytics: "Analytics", byCategory: "By category", revenue: "Revenue", panel: "Dashboard", aiSignals: "AI signals", running: "low", dead: "dead stock", products: "Products", monthRev: "Monthly revenue", topSold: "Top sellers", sold: "sold", ending: "low", allTab: "All", lowTab: "Low stock", revenue30: "30-day revenue", estProfit: "Est. profit", unitsSold: "Units sold", payTypes: "Payment types" },
 } as const;
 
 /* Telefon ichidagi POS ekrani mock'i */
 function PosScreen({ lang }: { lang: Lang }) {
   const m = MOCK[lang];
   const rows = [
-    { n: "Coca-Cola 0.5L", q: "×2", p: "12 000" },
-    { n: "Nestle 1.5L", q: "×1", p: "5 500" },
-    { n: "Snickers 50g", q: "×3", p: "9 000" },
-    { n: "Lavazza 250g", q: "×1", p: "14 000" },
+    { n: "Suv 1.5L", q: "×2", p: "12 000" },
+    { n: "Non", q: "×3", p: "12 000" },
+    { n: "Sut 1L", q: "×1", p: "5 500" },
+    { n: "Choy 100g", q: "×1", p: "14 000" },
   ];
   return (
     <div className="flex h-full flex-col">
@@ -834,53 +834,60 @@ function DashScreen({ lang }: { lang: Lang }) {
 /* Galereya uchun brauzer ichidagi ekran kontenti (0=dashboard, 1=ombor, 2=tahlil) */
 function GalleryScreen({ i, lang }: { i: number; lang: Lang }) {
   const m = MOCK[lang];
+  const dayUnit = lang === "ru" ? "дн" : lang === "en" ? "days" : "kun";
+  // ---- Ombor (real: Mahsulotlar jadvali) ----
   if (i === 1) {
     const rows = [
-      { n: "Coca-Cola 0.5L", s: "248", p: "6 000" },
-      { n: "Nestle 1.5L", s: "9", p: "5 500", low: true },
-      { n: "Snickers 50g", s: "132", p: "3 000" },
-      { n: "Lavazza 250g", s: "41", p: "62 000" },
-      { n: "Lays 90g", s: "76", p: "11 000" },
+      { n: "Suv 1.5L", sku: "SUV-15", s: "248", p: "6 000" },
+      { n: "Non", sku: "NON-01", s: "9", p: "4 000", low: true },
+      { n: "Sut 1L", sku: "SUT-1L", s: "132", p: "12 000" },
+      { n: "Guruch 1kg", sku: "GUR-1", s: "41", p: "18 000" },
+      { n: "Makaron 400g", sku: "MAK-4", s: "76", p: "9 000" },
+      { n: "Shakar 1kg", sku: "SHK-1", s: "3", p: "11 000", low: true },
     ];
     return (
       <div className="bg-white p-4">
-        <div className="mb-3 flex items-center justify-between">
-          <span className="text-sm font-bold text-slate-900">{m.inventory}</span>
-          <span className="rounded-lg bg-brand-100 px-2.5 py-1 text-[11px] font-semibold text-brand-700">+ {m.prod}</span>
+        <div className="mb-2 text-sm font-bold text-slate-900">{m.products}</div>
+        <div className="mb-2.5 flex gap-1.5">
+          <span className="rounded-lg bg-brand-600 px-2 py-1 text-[9px] font-semibold text-white">{m.allTab}</span>
+          <span className="rounded-lg bg-slate-100 px-2 py-1 text-[9px] font-medium text-slate-500">{m.lowTab} · 2</span>
         </div>
-        <div className="grid grid-cols-[1fr_auto_auto] gap-x-4 border-b border-slate-100 pb-1.5 text-[10px] font-medium uppercase tracking-wide text-slate-400">
-          <span>{m.prod}</span><span className="text-right">{m.stock}</span><span className="text-right">{m.price}</span>
+        <div className="grid grid-cols-[auto_1fr_auto_auto] gap-x-3 border-b border-slate-100 pb-1.5 text-[9px] font-medium uppercase tracking-wide text-slate-400">
+          <span className="w-6" /><span>{m.prod}</span><span className="text-right">{m.stock}</span><span className="text-right">{m.price}</span>
         </div>
         {rows.map((r) => (
-          <div key={r.n} className="grid grid-cols-[1fr_auto_auto] items-center gap-x-4 border-b border-slate-50 py-2 text-[12px]">
-            <span className="font-medium text-slate-700">{r.n}</span>
-            <span className={`text-right font-semibold ${r.low ? "text-rose-500" : "text-slate-600"}`}>{r.s}{r.low ? ` · ${m.low}` : ""}</span>
-            <span className="text-right text-slate-500">{r.p}</span>
+          <div key={r.sku} className="grid grid-cols-[auto_1fr_auto_auto] items-center gap-x-3 border-b border-slate-50 py-1.5 text-[11px]">
+            <span className="flex h-6 w-6 items-center justify-center rounded-md bg-brand-100 text-brand-600"><Icon d={Ic.box} className="h-3 w-3" /></span>
+            <span className="min-w-0"><span className="block truncate font-semibold text-brand-600">{r.n}</span><span className="block text-[8px] text-slate-400">{r.sku}</span></span>
+            <span className={`text-right font-semibold ${r.low ? "text-rose-500" : "text-slate-600"}`}>{r.s}</span>
+            <span className="text-right font-semibold text-slate-800">{r.p}</span>
           </div>
         ))}
       </div>
     );
   }
+  // ---- Tahlil (real: KPI + tushum grafigi) ----
   if (i === 2) {
-    const bars = [52, 70, 44, 88, 64, 96, 76, 60];
+    const bars = [52, 70, 44, 88, 64, 96, 76, 60, 84, 72, 90, 66, 80, 58];
     return (
       <div className="bg-[#f2f2f7] p-4">
-        <div className="mb-3 text-sm font-bold text-slate-900">{m.analytics}</div>
-        <div className="grid grid-cols-2 gap-2.5">
-          <div className="rounded-xl bg-white p-3 shadow-sm">
-            <div className="text-[10px] text-slate-400">{m.revenue}</div>
-            <div className="text-base font-bold text-slate-900">128M</div>
-            <div className="text-[10px] font-semibold text-emerald-500">▲ 18%</div>
-          </div>
-          <div className="rounded-xl bg-white p-3 shadow-sm">
-            <div className="text-[10px] text-slate-400">{m.profit}</div>
-            <div className="text-base font-bold text-slate-900">31%</div>
-            <div className="text-[10px] font-semibold text-emerald-500">▲ 4%</div>
-          </div>
+        <div className="mb-2.5 text-sm font-bold text-slate-900">{m.analytics}</div>
+        <div className="grid grid-cols-2 gap-2">
+          {[
+            { l: m.revenue30, v: "128 400 000" },
+            { l: m.estProfit, v: "39 800 000" },
+            { l: m.avgCheck, v: "33 400" },
+            { l: m.unitsSold, v: "24 180" },
+          ].map((c) => (
+            <div key={c.l} className="rounded-xl bg-white p-2.5 shadow-sm">
+              <div className="text-[9px] text-slate-400">{c.l}</div>
+              <div className="text-[12px] font-bold text-slate-900">{c.v}</div>
+            </div>
+          ))}
         </div>
-        <div className="mt-2.5 rounded-xl bg-white p-3 shadow-sm">
-          <div className="mb-2 text-[10px] text-slate-400">{m.byCategory}</div>
-          <div className="flex h-16 items-end gap-1.5">
+        <div className="mt-2 rounded-xl bg-white p-2.5 shadow-sm">
+          <div className="mb-1.5 text-[9px] text-slate-400">{m.revenue} · 30 {dayUnit}</div>
+          <div className="flex h-16 items-end gap-0.5">
             {bars.map((h, k) => (
               <div key={k} className="flex-1 rounded-t bg-gradient-to-t from-brand-500 to-brand-300" style={{ height: `${h}%` }} />
             ))}
@@ -889,22 +896,51 @@ function GalleryScreen({ i, lang }: { i: number; lang: Lang }) {
       </div>
     );
   }
-  // i === 0 — dashboard
-  const bars = [44, 66, 52, 84, 60, 96, 74];
+  // ---- Boshqaruv paneli (real: AI signallar + KPI + grafik + top) ----
+  const bars = [44, 66, 52, 84, 60, 96, 74, 58, 88, 70, 92, 64, 80, 72];
+  const top = [
+    { n: "Suv 1.5L", q: "3 515" },
+    { n: "Non", q: "2 480" },
+    { n: "Sut 1L", q: "1 960" },
+  ];
   return (
     <div className="bg-[#f2f2f7] p-4">
-      <div className="mb-3 text-sm font-bold text-slate-900">{m.dash}</div>
-      <div className="rounded-2xl bg-white p-4 shadow-sm">
-        <div className="flex items-center justify-between">
-          <div>
-            <div className="text-xs text-slate-400">{m.todayRev}</div>
-            <div className="text-2xl font-bold text-slate-900">4 280 000 <span className="text-xs font-medium text-slate-400">{m.som}</span></div>
-          </div>
-          <span className="rounded-full bg-emerald-100 px-2 py-1 text-xs font-semibold text-emerald-600">▲ 12%</span>
+      <div className="mb-2.5 text-sm font-bold text-slate-900">{m.panel}</div>
+      <div className="mb-2.5 rounded-2xl border border-brand-200/70 bg-brand-50/50 p-2.5">
+        <div className="mb-1.5 flex items-center gap-1.5 text-[10px] font-bold text-brand-700"><Icon d={Ic.spark} className="h-3 w-3" /> {m.aiSignals}</div>
+        <div className="flex flex-wrap gap-1.5">
+          <span className="rounded-lg border border-amber-200 bg-white px-2 py-1 text-[9px] font-medium text-amber-700">10 {m.prod} {m.running}</span>
+          <span className="rounded-lg border border-slate-200 bg-white px-2 py-1 text-[9px] font-medium text-slate-600">10 {m.dead}</span>
         </div>
-        <div className="mt-4 flex h-24 items-end gap-2">
-          {bars.map((h, k) => (
-            <div key={k} className="flex-1 rounded-t-lg bg-gradient-to-t from-brand-500 to-brand-300" style={{ height: `${h}%` }} />
+      </div>
+      <div className="grid grid-cols-2 gap-2">
+        {[
+          { l: m.todayRev, v: "4 280 000" },
+          { l: m.monthRev, v: "128 400 000" },
+        ].map((c) => (
+          <div key={c.l} className="rounded-xl bg-white p-2.5 shadow-sm">
+            <div className="text-[9px] text-slate-400">{c.l}</div>
+            <div className="text-[12px] font-bold text-slate-900">{c.v} <span className="text-[8px] font-medium text-slate-400">{m.som}</span></div>
+          </div>
+        ))}
+      </div>
+      <div className="mt-2 grid grid-cols-[1.5fr_1fr] gap-2">
+        <div className="rounded-xl bg-white p-2.5 shadow-sm">
+          <div className="mb-1.5 text-[9px] text-slate-400">{m.todayRev} · 14 {dayUnit}</div>
+          <div className="flex h-14 items-end gap-0.5">
+            {bars.map((h, k) => (
+              <div key={k} className="flex-1 rounded-t bg-gradient-to-t from-brand-500 to-brand-300" style={{ height: `${h}%` }} />
+            ))}
+          </div>
+        </div>
+        <div className="rounded-xl bg-white p-2.5 shadow-sm">
+          <div className="mb-1 text-[9px] font-semibold text-slate-500">{m.topSold}</div>
+          {top.map((r, k) => (
+            <div key={r.n} className="flex items-center gap-1.5 py-[3px]">
+              <span className="flex h-3.5 w-3.5 items-center justify-center rounded bg-brand-100 text-[8px] font-bold text-brand-700">{k + 1}</span>
+              <span className="flex-1 truncate text-[9px] font-medium text-slate-700">{r.n}</span>
+              <span className="text-[8px] text-slate-400">{r.q}</span>
+            </div>
           ))}
         </div>
       </div>
