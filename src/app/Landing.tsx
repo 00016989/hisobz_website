@@ -690,6 +690,23 @@ function TiltCard({ children, className = "", intensity = 9 }: { children: React
   );
 }
 
+// Bo'lim ustidagi kichik "eyebrow" yorliqlari (dizayn uchun)
+const EB = {
+  uz: { features: "Imkoniyatlar", showcase: "Ilova ichida", compare: "Taqqoslash", trust: "Ishonch", faq: "Savollar", pricing: "Tariflar", contact: "Bog'lanish", how: "Boshlash", cases: "Kim uchun", onboard: "Yordam" },
+  ru: { features: "Возможности", showcase: "Внутри", compare: "Сравнение", trust: "Доверие", faq: "Вопросы", pricing: "Тарифы", contact: "Контакты", how: "Старт", cases: "Для кого", onboard: "Помощь" },
+  en: { features: "Features", showcase: "Inside the app", compare: "Compare", trust: "Trust", faq: "FAQ", pricing: "Plans", contact: "Contact", how: "Get started", cases: "Who it's for", onboard: "Onboarding" },
+} as const;
+
+function Eyebrow({ children, center = false }: { children: React.ReactNode; center?: boolean }) {
+  return (
+    <div className={`mb-3 inline-flex items-center gap-2.5 text-[11px] font-bold uppercase tracking-[0.2em] text-brand-600 ${center ? "" : ""}`}>
+      <span className="h-px w-6 bg-gradient-to-r from-brand-500 to-brand-300" />
+      {children}
+      <span className="h-px w-6 bg-gradient-to-l from-brand-500 to-brand-300" />
+    </div>
+  );
+}
+
 function Logo({ size = 36 }: { size?: number }) {
   return (
     <span
@@ -1226,6 +1243,8 @@ export default function Landing() {
       <main id="top">
         {/* ============================ HERO ============================ */}
         <section className="relative overflow-hidden">
+          {/* nozik nuqta-tўr fon — chuqurlik uchun */}
+          <div className="pointer-events-none absolute inset-0 opacity-70 [background-image:radial-gradient(circle,rgba(234,88,12,0.10)_1px,transparent_1.6px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_80%_60%_at_50%_30%,#000,transparent_75%)]" />
           <motion.div className="pointer-events-none absolute inset-0" style={{ y: heroBlobY }}>
             <div className="absolute -left-32 -top-32 h-[28rem] w-[28rem] rounded-full bg-brand-200/50 blur-3xl" />
             <div className="absolute -right-40 top-20 h-[26rem] w-[26rem] rounded-full bg-brand-100/70 blur-3xl" />
@@ -1248,7 +1267,7 @@ export default function Landing() {
             </div>
 
             {/* 3D markaziy blob (WebGL) + suzuvchi telefon */}
-            <div className="relative flex h-[420px] items-center justify-center md:h-[540px]">
+            <div className="relative mt-6 flex h-[420px] items-center justify-center md:mt-0 md:h-[540px]">
               <div className="pointer-events-none absolute inset-0 md:pointer-events-auto">
                 <Hero3D />
               </div>
@@ -1275,6 +1294,7 @@ export default function Landing() {
         <section className="py-20">
           <div className="mx-auto max-w-6xl px-4 sm:px-6">
             <Reveal className="mx-auto max-w-2xl text-center">
+              <Eyebrow>{EB[lang].how}</Eyebrow>
               <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">{t.how.title}</h2>
               <p className="mt-3 text-[17px] text-slate-500">{t.how.subtitle}</p>
             </Reveal>
@@ -1299,6 +1319,7 @@ export default function Landing() {
         <section id="features" className="bg-[#f2f2f7] py-20">
           <div className="mx-auto max-w-6xl px-4 sm:px-6">
             <Reveal className="mx-auto max-w-2xl text-center">
+              <Eyebrow>{EB[lang].features}</Eyebrow>
               <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">{t.features.title}</h2>
               <p className="mt-3 text-[17px] text-slate-500">{t.features.subtitle}</p>
             </Reveal>
@@ -1306,7 +1327,7 @@ export default function Landing() {
               {t.features.items.map((f, i) => (
                 <Reveal key={f.t} delay={(i % 4) * 70}>
                   <TiltCard className="card group h-full p-6 transition-shadow duration-200 hover:shadow-[0_18px_44px_-16px_rgba(234,88,12,0.35)]">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-100 text-brand-600 transition-colors group-hover:bg-brand-600 group-hover:text-white" style={{ transform: "translateZ(28px)" }}>
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-100 to-brand-200/70 text-brand-600 shadow-sm transition-colors group-hover:from-brand-600 group-hover:to-brand-500 group-hover:text-white" style={{ transform: "translateZ(28px)" }}>
                       <Icon d={FEATURE_ICONS[i]} className="h-6 w-6" />
                     </div>
                     <h3 className="mt-4 text-base font-semibold text-slate-900">{f.t}</h3>
@@ -1324,6 +1345,7 @@ export default function Landing() {
         <section className="hz-stackable bg-white py-20">
           <div className="mx-auto max-w-6xl px-4 sm:px-6">
             <Reveal className="mx-auto max-w-2xl text-center">
+              <Eyebrow>{EB[lang].showcase}</Eyebrow>
               <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">{t.gallery.title}</h2>
               <p className="mt-3 text-[17px] text-slate-500">{t.gallery.subtitle}</p>
             </Reveal>
@@ -1410,6 +1432,7 @@ export default function Landing() {
         <section className="relative z-10 bg-white py-20">
           <div className="mx-auto max-w-6xl px-4 sm:px-6">
             <Reveal className="mx-auto max-w-2xl text-center">
+              <Eyebrow>{EB[lang].cases}</Eyebrow>
               <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">{t.useCases.title}</h2>
               <p className="mt-3 text-[17px] text-slate-500">{t.useCases.subtitle}</p>
             </Reveal>
@@ -1457,31 +1480,32 @@ export default function Landing() {
         <section id="compare" className="py-20">
           <div className="mx-auto max-w-5xl px-4 sm:px-6">
             <Reveal className="mx-auto max-w-2xl text-center">
+              <Eyebrow>{EB[lang].compare}</Eyebrow>
               <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">{t.compare.title}</h2>
               <p className="mt-3 text-[17px] text-slate-500">{t.compare.subtitle}</p>
             </Reveal>
             <div className="card mt-10 overflow-hidden p-0">
               <div className="overflow-x-auto">
-                <table className="w-full min-w-[560px]">
+                <table className="w-full min-w-0 sm:min-w-[560px]">
                   <thead>
                     <tr className="border-b border-slate-100 text-sm">
-                      <th className="px-5 py-4 text-left font-medium text-slate-400">{t.compare.cols.feature}</th>
-                      <th className="px-4 py-4 text-center">
+                      <th className="px-4 py-4 text-left font-medium text-slate-400 sm:px-5">{t.compare.cols.feature}</th>
+                      <th className="px-3 py-4 text-center sm:px-4">
                         <span className="inline-flex items-center gap-1.5 font-bold text-brand-600"><Logo size={20} /> {t.compare.cols.us}</span>
                       </th>
-                      <th className="px-4 py-4 text-center font-semibold text-slate-500">{t.compare.cols.billz}</th>
-                      <th className="px-4 py-4 text-center font-semibold text-slate-500">{t.compare.cols.other}</th>
+                      <th className="px-3 py-4 text-center font-semibold text-slate-500 sm:px-4">{t.compare.cols.billz}</th>
+                      <th className="hidden px-3 py-4 text-center font-semibold text-slate-500 sm:table-cell sm:px-4">{t.compare.cols.other}</th>
                     </tr>
                   </thead>
                   <tbody>
                     {COMPARE_ROWS.map((row, i) => (
                       <tr key={row.f} className={`text-sm ${i % 2 ? "bg-slate-50/40" : ""}`}>
-                        <td className="px-5 py-3.5 font-medium text-slate-700">{t.compare.rows[row.f]}</td>
-                        <td className="bg-brand-50/40 px-4 py-3.5 text-center">
+                        <td className="px-4 py-3.5 font-medium text-slate-700 sm:px-5">{t.compare.rows[row.f]}</td>
+                        <td className="bg-brand-50/40 px-3 py-3.5 text-center sm:px-4">
                           <div className="flex justify-center"><CompareCell token={row.h} t={t.compare} /></div>
                         </td>
-                        <td className="px-4 py-3.5 text-center"><div className="flex justify-center"><CompareCell token={row.b} t={t.compare} /></div></td>
-                        <td className="px-4 py-3.5 text-center"><div className="flex justify-center"><CompareCell token={row.o} t={t.compare} /></div></td>
+                        <td className="px-3 py-3.5 text-center sm:px-4"><div className="flex justify-center"><CompareCell token={row.b} t={t.compare} /></div></td>
+                        <td className="hidden px-3 py-3.5 text-center sm:table-cell sm:px-4"><div className="flex justify-center"><CompareCell token={row.o} t={t.compare} /></div></td>
                       </tr>
                     ))}
                   </tbody>
@@ -1496,6 +1520,7 @@ export default function Landing() {
         <section className="py-20">
           <div className="mx-auto max-w-6xl px-4 sm:px-6">
             <Reveal className="mx-auto max-w-2xl text-center">
+              <Eyebrow>{EB[lang].trust}</Eyebrow>
               <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">{t.trust.title}</h2>
               <p className="mt-3 text-[17px] text-slate-500">{t.trust.subtitle}</p>
             </Reveal>
@@ -1519,6 +1544,7 @@ export default function Landing() {
         <section className="bg-[#f2f2f7] py-20">
           <div className="mx-auto max-w-6xl px-4 sm:px-6">
             <Reveal className="mx-auto max-w-2xl text-center">
+              <Eyebrow>{EB[lang].onboard}</Eyebrow>
               <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">{t.onboard.title}</h2>
               <p className="mt-3 text-[17px] text-slate-500">{t.onboard.subtitle}</p>
             </Reveal>
@@ -1562,6 +1588,7 @@ export default function Landing() {
         <section className="bg-[#f2f2f7] py-20">
           <div className="mx-auto max-w-3xl px-4 sm:px-6">
             <Reveal className="mx-auto max-w-2xl text-center">
+              <Eyebrow>{EB[lang].faq}</Eyebrow>
               <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">{t.faq.title}</h2>
               <p className="mt-3 text-[17px] text-slate-500">{t.faq.subtitle}</p>
             </Reveal>
@@ -1588,6 +1615,7 @@ export default function Landing() {
         <section id="pricing" className="bg-[#f2f2f7] py-20">
           <div className="mx-auto max-w-6xl px-4 sm:px-6">
             <Reveal className="mx-auto max-w-2xl text-center">
+              <Eyebrow>{EB[lang].pricing}</Eyebrow>
               <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">{t.pricing.title}</h2>
               <p className="mt-3 text-[17px] text-slate-500">{t.pricing.subtitle}</p>
               <span className="mt-5 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-sm font-medium text-slate-600">
@@ -1727,6 +1755,7 @@ function ContactSection({ t, lang }: { t: Dict["contact"]; lang: Lang }) {
       </div>
       <div className="relative mx-auto grid max-w-5xl items-center gap-12 px-4 sm:px-6 md:grid-cols-2">
         <div>
+          <Eyebrow>{EB[lang].contact}</Eyebrow>
           <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">{t.title}</h2>
           <p className="mt-4 text-[17px] leading-relaxed text-slate-500">{t.subtitle}</p>
 
