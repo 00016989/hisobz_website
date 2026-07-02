@@ -73,7 +73,7 @@ const DICT = {
     compare: {
       title: "Nega Hisobz?",
       subtitle: "Mahalliy bizneslar uchun muhim bo'lgan narsalarda kuchli.",
-      cols: { feature: "Imkoniyat", us: "Hisobz", billz: "BILLZ", other: "Boshqa tizimlar" },
+      cols: { feature: "Imkoniyat", us: "Hisobz", other: "Boshqa POS tizimlar" },
       rows: {
         uzbek: "To'liq o'zbek tilida",
         payments: "Payme / Click ichida",
@@ -250,7 +250,7 @@ const DICT = {
     compare: {
       title: "Почему Hisobz?",
       subtitle: "Силён в том, что важно для местного бизнеса.",
-      cols: { feature: "Возможность", us: "Hisobz", billz: "BILLZ", other: "Другие системы" },
+      cols: { feature: "Возможность", us: "Hisobz", other: "Другие POS-системы" },
       rows: {
         uzbek: "Полностью на узбекском",
         payments: "Payme / Click внутри",
@@ -427,7 +427,7 @@ const DICT = {
     compare: {
       title: "Why Hisobz?",
       subtitle: "Strong where it matters for local business.",
-      cols: { feature: "Feature", us: "Hisobz", billz: "BILLZ", other: "Other systems" },
+      cols: { feature: "Feature", us: "Hisobz", other: "Other POS systems" },
       rows: {
         uzbek: "Fully in Uzbek",
         payments: "Payme / Click built-in",
@@ -1486,15 +1486,14 @@ export default function Landing() {
             </Reveal>
             <div className="card mt-10 overflow-hidden p-0">
               <div className="overflow-x-auto">
-                <table className="w-full min-w-0 sm:min-w-[560px]">
+                <table className="w-full">
                   <thead>
                     <tr className="border-b border-slate-100 text-sm">
                       <th className="px-4 py-4 text-left font-medium text-slate-400 sm:px-5">{t.compare.cols.feature}</th>
                       <th className="px-3 py-4 text-center sm:px-4">
                         <span className="inline-flex items-center gap-1.5 font-bold text-brand-600"><Logo size={20} /> {t.compare.cols.us}</span>
                       </th>
-                      <th className="px-3 py-4 text-center font-semibold text-slate-500 sm:px-4">{t.compare.cols.billz}</th>
-                      <th className="hidden px-3 py-4 text-center font-semibold text-slate-500 sm:table-cell sm:px-4">{t.compare.cols.other}</th>
+                      <th className="px-3 py-4 text-center font-semibold text-slate-500 sm:px-4">{t.compare.cols.other}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -1504,8 +1503,7 @@ export default function Landing() {
                         <td className="bg-brand-50/40 px-3 py-3.5 text-center sm:px-4">
                           <div className="flex justify-center"><CompareCell token={row.h} t={t.compare} /></div>
                         </td>
-                        <td className="px-3 py-3.5 text-center sm:px-4"><div className="flex justify-center"><CompareCell token={row.b} t={t.compare} /></div></td>
-                        <td className="hidden px-3 py-3.5 text-center sm:table-cell sm:px-4"><div className="flex justify-center"><CompareCell token={row.o} t={t.compare} /></div></td>
+                        <td className="px-3 py-3.5 text-center sm:px-4"><div className="flex justify-center"><CompareCell token={row.o} t={t.compare} /></div></td>
                       </tr>
                     ))}
                   </tbody>
