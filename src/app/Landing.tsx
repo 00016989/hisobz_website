@@ -67,7 +67,6 @@ const DICT = {
       subtitle:
         "Hisobz mobil ilovasi bilan savdo, qoldiq va hisobotlarni istalgan joydan kuzating. iPhone uchun toza, tez va tanish dizayn.",
       bullets: ["Real vaqt savdo va qoldiq", "Push bildirishnomalar", "Tarozi va shtrix-kod skaneri", "Oflayn ishlash"],
-      store: "App Store'da tez kunda",
     },
     integrations: { title: "Integratsiyalar — tez kunda", subtitle: "Mahalliy xizmatlarga ulanish tayyorlanmoqda: to'lov, SMS, fiskal va marketpleys.", badge: "Rejada" },
     compare: {
@@ -92,8 +91,6 @@ const DICT = {
     pricing: {
       title: "Sizning biznesingizga mos tarif",
       subtitle: "Eng mosini birga tanlaymiz — narx biznes hajmingizga qarab belgilanadi.",
-      perMonth: "/oy",
-      priceHidden: "So'rov asosida",
       onRequest: "Narxlar so'rov asosida",
       cta: "Tanlash",
       tiers: [
@@ -117,7 +114,7 @@ const DICT = {
       or: "yoki to'g'ridan-to'g'ri",
       call: "Qo'ng'iroq qilish",
     },
-    footer: { tagline: "Savdo, ombor va kassa tizimi", rights: "Barcha huquqlar himoyalangan", madeIn: "O'zbekistonda ishlab chiqilgan", blurb: "O'zbekiston bizneslari uchun zamonaviy savdo, ombor va kassa tizimi.", colProduct: "Mahsulot", colContact: "Bog'lanish" },
+    footer: { rights: "Barcha huquqlar himoyalangan", madeIn: "O'zbekistonda ishlab chiqilgan", blurb: "O'zbekiston bizneslari uchun zamonaviy savdo, ombor va kassa tizimi.", colProduct: "Mahsulot", colContact: "Bog'lanish" },
     onboard: {
       title: "Biz yordam beramiz — boshidan oxirigacha",
       subtitle: "Yolg'iz qolmaysiz. O'rnatish, ma'lumot ko'chirish va o'qitish — biz bilan.",
@@ -131,12 +128,12 @@ const DICT = {
       title: "Qurilmalaringiz bilan ishlaydi",
       subtitle: "Maxsus qurilma shart emas — bori bilan ishlaydi.",
       items: [
-        { i: "📷", t: "Shtrix-kod skaneri" },
-        { i: "🖨️", t: "Chek printeri" },
-        { i: "⚖️", t: "Tarozi" },
-        { i: "💵", t: "Pul yashigi" },
-        { i: "💻", t: "Istalgan kompyuter" },
-        { i: "📱", t: "Telefon / planshet" },
+        { t: "Shtrix-kod skaneri" },
+        { t: "Chek printeri" },
+        { t: "Tarozi" },
+        { t: "Pul yashigi" },
+        { t: "Istalgan kompyuter" },
+        { t: "Telefon / planshet" },
       ],
     },
     how: {
@@ -244,7 +241,6 @@ const DICT = {
       subtitle:
         "С мобильным приложением Hisobz следите за продажами, остатками и отчётами из любого места. Чистый и быстрый дизайн для iPhone.",
       bullets: ["Продажи и остатки в реальном времени", "Push-уведомления", "Сканер штрих-кодов и весы", "Работа офлайн"],
-      store: "Скоро в App Store",
     },
     integrations: { title: "Интеграции — скоро", subtitle: "Готовим подключение к местным сервисам: платежи, SMS, фискал и маркетплейс.", badge: "В планах" },
     compare: {
@@ -269,8 +265,6 @@ const DICT = {
     pricing: {
       title: "Тариф под ваш бизнес",
       subtitle: "Подберём подходящий вместе — цена зависит от размера вашего бизнеса.",
-      perMonth: "/мес",
-      priceHidden: "По запросу",
       onRequest: "Цены по запросу",
       cta: "Выбрать",
       tiers: [
@@ -294,7 +288,7 @@ const DICT = {
       or: "или напрямую",
       call: "Позвонить",
     },
-    footer: { tagline: "Система продаж, склада и кассы", rights: "Все права защищены", madeIn: "Разработано в Узбекистане", blurb: "Современная система продаж, склада и кассы для бизнеса в Узбекистане.", colProduct: "Продукт", colContact: "Контакты" },
+    footer: { rights: "Все права защищены", madeIn: "Разработано в Узбекистане", blurb: "Современная система продаж, склада и кассы для бизнеса в Узбекистане.", colProduct: "Продукт", colContact: "Контакты" },
     onboard: {
       title: "Мы помогаем — от начала до конца",
       subtitle: "Вы не одни. Настройка, перенос данных и обучение — вместе с нами.",
@@ -308,12 +302,12 @@ const DICT = {
       title: "Работает с вашим оборудованием",
       subtitle: "Спецоборудование не нужно — работает с тем, что есть.",
       items: [
-        { i: "📷", t: "Сканер штрих-кодов" },
-        { i: "🖨️", t: "Чековый принтер" },
-        { i: "⚖️", t: "Весы" },
-        { i: "💵", t: "Денежный ящик" },
-        { i: "💻", t: "Любой компьютер" },
-        { i: "📱", t: "Телефон / планшет" },
+        { t: "Сканер штрих-кодов" },
+        { t: "Чековый принтер" },
+        { t: "Весы" },
+        { t: "Денежный ящик" },
+        { t: "Любой компьютер" },
+        { t: "Телефон / планшет" },
       ],
     },
     how: {
@@ -421,7 +415,6 @@ const DICT = {
       subtitle:
         "With the Hisobz mobile app, track sales, stock and reports from anywhere. A clean, fast, familiar design for iPhone.",
       bullets: ["Real-time sales & stock", "Push notifications", "Barcode scanner & scale", "Works offline"],
-      store: "Coming soon to the App Store",
     },
     integrations: { title: "Integrations — coming soon", subtitle: "We're preparing connections to local services: payments, SMS, fiscal and marketplace.", badge: "Planned" },
     compare: {
@@ -446,8 +439,6 @@ const DICT = {
     pricing: {
       title: "A plan that fits your business",
       subtitle: "We'll pick the right one together — pricing scales to your business size.",
-      perMonth: "/mo",
-      priceHidden: "On request",
       onRequest: "Pricing on request",
       cta: "Choose",
       tiers: [
@@ -471,7 +462,7 @@ const DICT = {
       or: "or reach us directly",
       call: "Call",
     },
-    footer: { tagline: "Sales, inventory and POS system", rights: "All rights reserved", madeIn: "Made in Uzbekistan", blurb: "A modern sales, inventory and POS system for businesses in Uzbekistan.", colProduct: "Product", colContact: "Contact" },
+    footer: { rights: "All rights reserved", madeIn: "Made in Uzbekistan", blurb: "A modern sales, inventory and POS system for businesses in Uzbekistan.", colProduct: "Product", colContact: "Contact" },
     onboard: {
       title: "We help you — start to finish",
       subtitle: "You're not on your own. Setup, data migration and training — with us.",
@@ -485,12 +476,12 @@ const DICT = {
       title: "Works with your hardware",
       subtitle: "No special equipment needed — works with what you already have.",
       items: [
-        { i: "📷", t: "Barcode scanner" },
-        { i: "🖨️", t: "Receipt printer" },
-        { i: "⚖️", t: "Scale" },
-        { i: "💵", t: "Cash drawer" },
-        { i: "💻", t: "Any computer" },
-        { i: "📱", t: "Phone / tablet" },
+        { t: "Barcode scanner" },
+        { t: "Receipt printer" },
+        { t: "Scale" },
+        { t: "Cash drawer" },
+        { t: "Any computer" },
+        { t: "Phone / tablet" },
       ],
     },
     how: {
@@ -697,9 +688,9 @@ const EB = {
   en: { features: "Features", showcase: "Inside the app", compare: "Compare", trust: "Trust", faq: "FAQ", pricing: "Plans", contact: "Contact", how: "Get started", cases: "Who it's for", onboard: "Onboarding" },
 } as const;
 
-function Eyebrow({ children, center = false }: { children: React.ReactNode; center?: boolean }) {
+function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <div className={`mb-3 inline-flex items-center gap-2.5 text-[11px] font-bold uppercase tracking-[0.2em] text-brand-600 ${center ? "" : ""}`}>
+    <div className="mb-3 inline-flex items-center gap-2.5 text-[11px] font-bold uppercase tracking-[0.2em] text-brand-600">
       <span className="h-px w-6 bg-gradient-to-r from-brand-500 to-brand-300" />
       {children}
       <span className="h-px w-6 bg-gradient-to-l from-brand-500 to-brand-300" />
@@ -763,9 +754,9 @@ function BrowserFrame({ url, children, className = "" }: { url: string; children
 
 /* Mock ekranlar uchun tilga moslangan yorliqlar */
 const MOCK = {
-  uz: { pos: "Kassa", shiftOpen: "Smena ochiq", search: "Shtrix-kod yoki nom…", total: "Jami", pay: "To'lov", som: "so'm", dash: "Boshqaruv", todayRev: "Bugungi tushum", vsYesterday: "kechagidan", receipts: "Cheklar", avgCheck: "O'rtacha chek", customers: "Mijozlar", lowStock: "Tugayotgan", profit: "Foyda", prod: "Tovar", stock: "Qoldiq", price: "Narx", low: "Kam", inventory: "Ombor", analytics: "Tahlil", byCategory: "Kategoriya bo'yicha", revenue: "Tushum", panel: "Boshqaruv paneli", aiSignals: "AI signallar", running: "tugayapti", dead: "o'lik tovar", products: "Mahsulotlar", monthRev: "Oylik tushum", topSold: "Eng ko'p sotilganlar", sold: "sotildi", ending: "tugayapti", allTab: "Barchasi", lowTab: "Kam qoldiq", revenue30: "30 kunlik tushum", estProfit: "Taxminiy foyda", unitsSold: "Sotilgan birliklar", payTypes: "To'lov turlari" },
-  ru: { pos: "Касса", shiftOpen: "Смена открыта", search: "Штрих-код или название…", total: "Итого", pay: "Оплата", som: "сум", dash: "Панель", todayRev: "Выручка сегодня", vsYesterday: "к вчера", receipts: "Чеки", avgCheck: "Средний чек", customers: "Клиенты", lowStock: "Заканчивается", profit: "Прибыль", prod: "Товар", stock: "Остаток", price: "Цена", low: "Мало", inventory: "Склад", analytics: "Аналитика", byCategory: "По категориям", revenue: "Выручка", panel: "Панель управления", aiSignals: "AI сигналы", running: "заканч.", dead: "мёртвый товар", products: "Товары", monthRev: "Выручка за месяц", topSold: "Топ продаж", sold: "продано", ending: "заканч.", allTab: "Все", lowTab: "Мало", revenue30: "Выручка за 30 дн", estProfit: "Расчётная прибыль", unitsSold: "Продано единиц", payTypes: "Способы оплаты" },
-  en: { pos: "Checkout", shiftOpen: "Shift open", search: "Barcode or name…", total: "Total", pay: "Pay", som: "so'm", dash: "Dashboard", todayRev: "Today's revenue", vsYesterday: "vs yesterday", receipts: "Receipts", avgCheck: "Avg. receipt", customers: "Customers", lowStock: "Low stock", profit: "Profit", prod: "Product", stock: "Stock", price: "Price", low: "Low", inventory: "Inventory", analytics: "Analytics", byCategory: "By category", revenue: "Revenue", panel: "Dashboard", aiSignals: "AI signals", running: "low", dead: "dead stock", products: "Products", monthRev: "Monthly revenue", topSold: "Top sellers", sold: "sold", ending: "low", allTab: "All", lowTab: "Low stock", revenue30: "30-day revenue", estProfit: "Est. profit", unitsSold: "Units sold", payTypes: "Payment types" },
+  uz: { pos: "Kassa", shiftOpen: "Smena ochiq", search: "Shtrix-kod yoki nom…", total: "Jami", pay: "To'lov", som: "so'm", dash: "Boshqaruv", todayRev: "Bugungi tushum", vsYesterday: "kechagidan", receipts: "Cheklar", avgCheck: "O'rtacha chek", customers: "Mijozlar", lowStock: "Tugayotgan", prod: "Tovar", stock: "Qoldiq", price: "Narx", analytics: "Tahlil", revenue: "Tushum", panel: "Boshqaruv paneli", aiSignals: "AI signallar", running: "tugayapti", dead: "o'lik tovar", products: "Mahsulotlar", monthRev: "Oylik tushum", topSold: "Eng ko'p sotilganlar", allTab: "Barchasi", lowTab: "Kam qoldiq", revenue30: "30 kunlik tushum", estProfit: "Taxminiy foyda", unitsSold: "Sotilgan birliklar" },
+  ru: { pos: "Касса", shiftOpen: "Смена открыта", search: "Штрих-код или название…", total: "Итого", pay: "Оплата", som: "сум", dash: "Панель", todayRev: "Выручка сегодня", vsYesterday: "к вчера", receipts: "Чеки", avgCheck: "Средний чек", customers: "Клиенты", lowStock: "Заканчивается", prod: "Товар", stock: "Остаток", price: "Цена", analytics: "Аналитика", revenue: "Выручка", panel: "Панель управления", aiSignals: "AI сигналы", running: "заканч.", dead: "мёртвый товар", products: "Товары", monthRev: "Выручка за месяц", topSold: "Топ продаж", allTab: "Все", lowTab: "Мало", revenue30: "Выручка за 30 дн", estProfit: "Расчётная прибыль", unitsSold: "Продано единиц" },
+  en: { pos: "Checkout", shiftOpen: "Shift open", search: "Barcode or name…", total: "Total", pay: "Pay", som: "so'm", dash: "Dashboard", todayRev: "Today's revenue", vsYesterday: "vs yesterday", receipts: "Receipts", avgCheck: "Avg. receipt", customers: "Customers", lowStock: "Low stock", prod: "Product", stock: "Stock", price: "Price", analytics: "Analytics", revenue: "Revenue", panel: "Dashboard", aiSignals: "AI signals", running: "low", dead: "dead stock", products: "Products", monthRev: "Monthly revenue", topSold: "Top sellers", allTab: "All", lowTab: "Low stock", revenue30: "30-day revenue", estProfit: "Est. profit", unitsSold: "Units sold" },
 } as const;
 
 /* Telefon ichidagi POS ekrani mock'i */
@@ -977,17 +968,17 @@ function CompareCell({ token, t }: { token: string; t: Dict["compare"] }) {
   return <span className="text-[13px] font-medium text-slate-500">{txt}</span>;
 }
 
-const COMPARE_ROWS: { f: keyof (typeof DICT)["uz"]["compare"]["rows"]; h: string; b: string; o: string }[] = [
-  { f: "uzbek", h: "yes", b: "yes", o: "partial" },
-  { f: "payments", h: "yes", b: "yes", o: "extra" },
-  { f: "fiscal", h: "yes", b: "yes", o: "partial" },
-  { f: "offline", h: "yes", b: "no", o: "no" },
-  { f: "platforms", h: "all", b: "web", o: "web" },
-  { f: "selfstart", h: "self", b: "manager", o: "manager" },
-  { f: "sms", h: "yes", b: "yes", o: "extra" },
-  { f: "multistore", h: "yes", b: "yes", o: "partial" },
-  { f: "pricing", h: "som", b: "deal", o: "deal" },
-  { f: "ownership", h: "yes", b: "partial", o: "no" },
+const COMPARE_ROWS: { f: keyof (typeof DICT)["uz"]["compare"]["rows"]; h: string; o: string }[] = [
+  { f: "uzbek", h: "yes", o: "partial" },
+  { f: "payments", h: "yes", o: "extra" },
+  { f: "fiscal", h: "yes", o: "partial" },
+  { f: "offline", h: "yes", o: "no" },
+  { f: "platforms", h: "all", o: "web" },
+  { f: "selfstart", h: "self", o: "manager" },
+  { f: "sms", h: "yes", o: "extra" },
+  { f: "multistore", h: "yes", o: "partial" },
+  { f: "pricing", h: "som", o: "deal" },
+  { f: "ownership", h: "yes", o: "no" },
 ];
 
 /* AI bo'limi — REAL "AI signallar" paneli + halol "rivojlanmoqda" ramkasi */
@@ -1154,7 +1145,6 @@ export default function Landing() {
         .hz-floaty{ animation: hz-floaty 6s ease-in-out infinite }
         .hz-floaty2{ animation: hz-floaty2 7.5s ease-in-out infinite }
         .hz-marquee{ animation: hz-marquee 26s linear infinite }
-        @keyframes hz-blink { 0%,100%{ opacity: 0.25 } 50%{ opacity: 1 } }
         @media (prefers-reduced-motion: reduce){ .hz-reveal,.hz-floaty,.hz-floaty2,.hz-marquee{ animation: none } }
         /* CSS-only galereya tablari */
         .hz-tabinput{ position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
