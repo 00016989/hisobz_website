@@ -69,7 +69,7 @@ const DICT = {
       bullets: ["Real vaqt savdo va qoldiq", "Push bildirishnomalar", "Tarozi va shtrix-kod skaneri", "Oflayn ishlash"],
       store: "App Store'da tez kunda",
     },
-    integrations: { title: "Mahalliy xizmatlar bilan tayyor", subtitle: "Hujjatsiz ovora bo'lmaysiz — ulanib ishlaydi." },
+    integrations: { title: "Integratsiyalar — tez kunda", subtitle: "Mahalliy xizmatlarga ulanish tayyorlanmoqda: to'lov, SMS, fiskal va marketpleys.", badge: "Rejada" },
     compare: {
       title: "Nega Hisobz?",
       subtitle: "Mahalliy bizneslar uchun muhim bo'lgan narsalarda kuchli.",
@@ -187,16 +187,22 @@ const DICT = {
     },
     sticky: "Bog'lanish",
     ai: {
-      badge: "Tez kunda — Sun'iy intellekt",
-      title: "Aqlli savdo — Hisobz AI",
-      subtitle: "Hisobz nafaqat hisoblaydi — u o'ylaydi. AI narxlarni tekshiradi, talabni bashorat qiladi va savollaringizga javob beradi.",
+      badge: "Aqlli tahlil — allaqachon ishlaydi",
+      title: "Hisobz AI — do'koningizni o'ylab beradi",
+      subtitle: "Hisobz allaqachon savdo va ombor bo'yicha aqlli signallar beradi. Yanada kuchli imkoniyatlar yo'lda.",
       items: [
-        { t: "Avto narx tekshiruvi", d: "AI har bir mahsulot narxini bozor bilan solishtiradi va eng foydali narxni taklif qiladi." },
-        { t: "Talab bashorati", d: "Qaysi tovar tugashini oldindan aytadi — o'z vaqtida buyurtma qiling." },
-        { t: "Aqlli yordamchi", d: "\"Bugun eng ko'p nima sotildi?\" deb so'rang — darhol javob oling." },
+        { t: "Eng ko'p va eng kam sotilgan", d: "Qaysi tovar zo'r ketyapti, qaysi biri turib qolgan — bir qarashda." },
+        { t: "Tugayotgan tovar ogohlantirishi", d: "Nima tugayapti va qancha buyurtma qilish kerakligini aytadi." },
+        { t: "Talab prognozi", d: "Keyingi kunlar savdosini bashorat qiladi — hafta kuni mavsumiyligi bilan." },
       ],
-      demo: "AI hisoblamoqda…",
-      cart: "Savatcha tahlili",
+      note: "Va yana: narx optimizatsiyasi, mijoz churn tahlili, ABC va anomaliya — rivojlanmoqda.",
+      panelTitle: "AI signallar",
+      signals: [
+        { l: "Tugayotgan tovar", v: "6 ta", tone: "warn" },
+        { l: "O'lik tovar (30 kun)", v: "10 ta", tone: "amber" },
+        { l: "Eng ko'p sotilgan", v: "Suv 1.5L", tone: "good" },
+      ],
+      forecastLabel: "Ertangi bashorat",
     },
   },
 
@@ -240,7 +246,7 @@ const DICT = {
       bullets: ["Продажи и остатки в реальном времени", "Push-уведомления", "Сканер штрих-кодов и весы", "Работа офлайн"],
       store: "Скоро в App Store",
     },
-    integrations: { title: "Готов к местным сервисам", subtitle: "Никакой возни — подключается и работает." },
+    integrations: { title: "Интеграции — скоро", subtitle: "Готовим подключение к местным сервисам: платежи, SMS, фискал и маркетплейс.", badge: "В планах" },
     compare: {
       title: "Почему Hisobz?",
       subtitle: "Силён в том, что важно для местного бизнеса.",
@@ -358,16 +364,22 @@ const DICT = {
     },
     sticky: "Связаться",
     ai: {
-      badge: "Скоро — Искусственный интеллект",
-      title: "Умная торговля — Hisobz AI",
-      subtitle: "Hisobz не просто считает — он думает. AI проверяет цены, прогнозирует спрос и отвечает на ваши вопросы.",
+      badge: "Умный анализ — уже работает",
+      title: "Hisobz AI — думает за ваш магазин",
+      subtitle: "Hisobz уже даёт умные сигналы по продажам и складу. Более мощные возможности — в пути.",
       items: [
-        { t: "Авто-проверка цен", d: "AI сравнивает цену каждого товара с рынком и предлагает самую выгодную." },
-        { t: "Прогноз спроса", d: "Заранее подскажет, что заканчивается — заказывайте вовремя." },
-        { t: "Умный помощник", d: "Спросите «Что продавалось лучше всего сегодня?» — получите ответ сразу." },
+        { t: "Лучшие и худшие продажи", d: "Что продаётся отлично, а что залежалось — с одного взгляда." },
+        { t: "Оповещение о заканчивающихся", d: "Что заканчивается и сколько заказать — подскажет." },
+        { t: "Прогноз спроса", d: "Прогнозирует продажи на ближайшие дни — с учётом дня недели." },
       ],
-      demo: "AI считает…",
-      cart: "Анализ корзины",
+      note: "А также: оптимизация цен, отток клиентов, ABC и аномалии — в разработке.",
+      panelTitle: "AI сигналы",
+      signals: [
+        { l: "Заканчивается", v: "6 шт", tone: "warn" },
+        { l: "Мёртвый товар (30 дн)", v: "10 шт", tone: "amber" },
+        { l: "Топ продаж", v: "Вода 1.5L", tone: "good" },
+      ],
+      forecastLabel: "Прогноз на завтра",
     },
   },
 
@@ -411,7 +423,7 @@ const DICT = {
       bullets: ["Real-time sales & stock", "Push notifications", "Barcode scanner & scale", "Works offline"],
       store: "Coming soon to the App Store",
     },
-    integrations: { title: "Ready for local services", subtitle: "No paperwork hassle — it just connects." },
+    integrations: { title: "Integrations — coming soon", subtitle: "We're preparing connections to local services: payments, SMS, fiscal and marketplace.", badge: "Planned" },
     compare: {
       title: "Why Hisobz?",
       subtitle: "Strong where it matters for local business.",
@@ -529,16 +541,22 @@ const DICT = {
     },
     sticky: "Contact us",
     ai: {
-      badge: "Coming soon — Artificial Intelligence",
-      title: "Smart retail — Hisobz AI",
-      subtitle: "Hisobz doesn't just count — it thinks. AI checks prices, forecasts demand and answers your questions.",
+      badge: "Smart analysis — already live",
+      title: "Hisobz AI — thinks for your store",
+      subtitle: "Hisobz already gives smart signals on sales and stock. More powerful capabilities are on the way.",
       items: [
-        { t: "Auto price-check", d: "AI compares each product's price with the market and suggests the most profitable one." },
-        { t: "Demand forecast", d: "Tells you in advance what's running out — order on time." },
-        { t: "Smart assistant", d: "Ask \"What sold best today?\" — get the answer instantly." },
+        { t: "Best & worst sellers", d: "What's flying off the shelf and what's stuck — at a glance." },
+        { t: "Low-stock alerts", d: "What's running out and how much to reorder — it tells you." },
+        { t: "Demand forecast", d: "Predicts the next days' sales — with day-of-week seasonality." },
       ],
-      demo: "AI calculating…",
-      cart: "Cart analysis",
+      note: "Plus: price optimization, customer churn, ABC and anomaly detection — in progress.",
+      panelTitle: "AI signals",
+      signals: [
+        { l: "Running out", v: "6 items", tone: "warn" },
+        { l: "Dead stock (30d)", v: "10 items", tone: "amber" },
+        { l: "Top seller", v: "Water 1.5L", tone: "good" },
+      ],
+      forecastLabel: "Tomorrow's forecast",
     },
   },
 } as const;
@@ -919,44 +937,34 @@ const COMPARE_ROWS: { f: keyof (typeof DICT)["uz"]["compare"]["rows"]; h: string
   { f: "ownership", h: "yes", b: "partial", o: "no" },
 ];
 
-function Dot({ d = 0 }: { d?: number }) {
-  return <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand-400" style={{ animation: `hz-blink 1s ${d}s infinite` }} />;
-}
+/* AI bo'limi — REAL "AI signallar" paneli + halol "rivojlanmoqda" ramkasi */
+const SIGNAL_ICONS = [Ic.pos, Ic.box, Ic.spark];
+const TONE_CLS: Record<string, string> = { warn: "text-amber-300", amber: "text-amber-300", good: "text-emerald-300", bad: "text-rose-300" };
 
-/* AI bo'limi — "tez kunda", AI savatchani hisoblayotgan animatsiya bilan */
 function AISection({ t }: { t: Dict["ai"] }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [total, setTotal] = useState(247500);
-  const [thinking, setThinking] = useState(false);
+  const [fc, setFc] = useState(133_731_032);
   useEffect(() => {
     const el = ref.current;
     if (!el || typeof IntersectionObserver === "undefined") return;
     const io = new IntersectionObserver(([e]) => {
       if (!e.isIntersecting) return;
       io.disconnect();
-      setThinking(true);
-      const target = 247500;
+      const target = 133_731_032;
       const t0 = performance.now();
       const dur = 1700;
       const tick = (now: number) => {
         const p = Math.min(1, (now - t0) / dur);
         const eased = 1 - Math.pow(1 - p, 3);
-        setTotal(Math.round(target * eased));
+        setFc(Math.round(target * eased));
         if (p < 1) requestAnimationFrame(tick);
-        else setThinking(false);
       };
-      setTotal(0);
+      setFc(0);
       requestAnimationFrame(tick);
     }, { threshold: 0.4 });
     io.observe(el);
     return () => io.disconnect();
   }, []);
-
-  const items = [
-    { n: "Coca-Cola 0.5L", q: "×2", p: "12 000" },
-    { n: "Nestle 1.5L", q: "×1", p: "5 500" },
-    { n: "Lavazza 250g", q: "×1", p: "62 000" },
-  ];
 
   return (
     <section className="hz-stackable relative overflow-hidden bg-slate-950 py-24">
@@ -966,8 +974,8 @@ function AISection({ t }: { t: Dict["ai"] }) {
       </div>
       <div className="relative mx-auto grid max-w-6xl items-center gap-14 px-4 sm:px-6 md:grid-cols-2">
         <motion.div initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}>
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-semibold text-brand-300">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-brand-400" /> {t.badge}
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-semibold text-emerald-300">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" /> {t.badge}
           </span>
           <h2 className="mt-5 text-3xl font-bold tracking-tight text-white sm:text-4xl">{t.title}</h2>
           <p className="mt-4 text-[17px] leading-relaxed text-slate-300">{t.subtitle}</p>
@@ -984,36 +992,35 @@ function AISection({ t }: { t: Dict["ai"] }) {
               </li>
             ))}
           </ul>
+          <p className="mt-6 text-sm text-slate-400">{t.note}</p>
         </motion.div>
 
         <motion.div ref={ref} initial={{ opacity: 0, scale: 0.94 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}>
           <div className="relative rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl">
             <div className="mb-4 flex items-center justify-between">
-              <span className="text-sm font-semibold text-white">{t.cart}</span>
+              <span className="text-sm font-semibold text-white">{t.panelTitle}</span>
               <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-500/15 px-2.5 py-1 text-[11px] font-medium text-brand-300">
                 <Icon d={Ic.spark} className="h-3 w-3" /> AI
               </span>
             </div>
             <div className="space-y-2">
-              {items.map((r) => (
-                <div key={r.n} className="flex items-center justify-between rounded-xl bg-white/5 px-3.5 py-2.5">
-                  <div>
-                    <div className="text-[13px] font-medium text-white">{r.n}</div>
-                    <div className="text-[11px] text-slate-500">{r.q}</div>
-                  </div>
-                  <div className="text-[13px] font-semibold text-slate-200">{r.p}</div>
+              {t.signals.map((s, i) => (
+                <div key={s.l} className="flex items-center justify-between rounded-xl bg-white/5 px-3.5 py-3">
+                  <span className="flex items-center gap-3">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10 text-slate-200">
+                      <Icon d={SIGNAL_ICONS[i]} className="h-4 w-4" />
+                    </span>
+                    <span className="text-[13px] text-slate-200">{s.l}</span>
+                  </span>
+                  <span className={`text-[13px] font-semibold ${TONE_CLS[s.tone] ?? "text-slate-200"}`}>{s.v}</span>
                 </div>
               ))}
             </div>
             <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-4">
               <span className="flex items-center gap-2 text-sm text-slate-400">
-                {thinking ? (
-                  <><span className="inline-flex items-center gap-1"><Dot /><Dot d={0.15} /><Dot d={0.3} /></span> {t.demo}</>
-                ) : (
-                  <><Icon d={Ic.spark} className="h-4 w-4 text-brand-400" /> {t.cart}</>
-                )}
+                <Icon d={Ic.chart} className="h-4 w-4 text-brand-400" /> {t.forecastLabel}
               </span>
-              <span className="text-xl font-bold tabular-nums text-white">{total.toLocaleString("ru-RU")} <span className="text-xs font-medium text-slate-500">so'm</span></span>
+              <span className="text-xl font-bold tabular-nums text-white">{fc.toLocaleString("ru-RU")} <span className="text-xs font-medium text-slate-500">so'm</span></span>
             </div>
           </div>
         </motion.div>
@@ -1388,16 +1395,19 @@ export default function Landing() {
         {/* ============================ INTEGRATIONS ============================ */}
         <section className="bg-[#f2f2f7] py-16">
           <div className="mx-auto mb-9 max-w-6xl px-4 text-center sm:px-6">
+            <span className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-700">
+              <span className="h-1.5 w-1.5 rounded-full bg-amber-500" /> {t.integrations.badge}
+            </span>
             <h2 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">{t.integrations.title}</h2>
             <p className="mt-2 text-slate-500">{t.integrations.subtitle}</p>
           </div>
-          {/* Apple uslubidagi sekin oqadigan marquee — ikki nusxa (uzluksiz) */}
+          {/* Apple uslubidagi sekin oqadigan marquee — ikki nusxa (uzluksiz). Hozircha REJADA (ulanmagan). */}
           <div className="relative overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_12%,#000_88%,transparent)]">
             <div className="hz-marquee flex w-max gap-3 pr-3">
               {[0, 1].map((dup) => (
                 <div key={dup} className="flex shrink-0 gap-3" aria-hidden={dup === 1}>
                   {["Payme", "Click", "soliq.uz OFD", "Eskiz SMS", "Uzum Market", "Didox", "Telegram"].map((name) => (
-                    <span key={name} className="whitespace-nowrap rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm">
+                    <span key={name} className="whitespace-nowrap rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-500 shadow-sm">
                       {name}
                     </span>
                   ))}
